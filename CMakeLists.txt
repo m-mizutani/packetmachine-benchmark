@@ -28,5 +28,6 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ENDIF()
 
 
-ADD_EXECUTABLE(pm-bench "src/pm-bench.cc")
+ADD_EXECUTABLE(pm-bench   "src/pm-bench.cc")
+ADD_EXECUTABLE(tins-bench "src/tins-bench.cc")
 
