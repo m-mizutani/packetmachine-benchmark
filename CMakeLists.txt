@@ -17,6 +17,10 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-Wall -O3 -std=c++0x")
 SET(CMAKE_CXX_FLAGS_DEBUG   "-Wall -O0 -std=c++0x -g -DPACKETMACHINE_DEBUG")
 SET(CMAKE_SHARED_LINKER_FLAGS "-lpcap -dynamiclib")
 
+INCLUDE_DIRECTORIES(external/packetmachine/src/)
+ADD_SUBDIRECTORY(external/packetmachine)
+
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
@@ -28,6 +32,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ENDIF()
 
 
-ADD_EXECUTABLE(pm-bench   "src/pm-bench.cc")
+ADD_EXECUTABLE(pm-bench "src/pm-bench.cc")
+# TARGET_LINK_LIBRARIES(pm-bench pm-static)
 ADD_EXECUTABLE(tins-bench "src/tins-bench.cc")
-
+TARGET_LINK_LIBRARIES(tins-bench tins)
