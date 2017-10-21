@@ -19,6 +19,8 @@ SET(CMAKE_SHARED_LINKER_FLAGS "-lpcap -dynamiclib")
 
 INCLUDE_DIRECTORIES(external/packetmachine/src/)
 ADD_SUBDIRECTORY(external/packetmachine)
+INCLUDE_DIRECTORIES(external/libtins/src/)
+ADD_SUBDIRECTORY(external/libtins)
 
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
@@ -33,6 +35,6 @@ ENDIF()
 
 
 ADD_EXECUTABLE(pm-bench "src/pm-bench.cc")
-# TARGET_LINK_LIBRARIES(pm-bench pm-static)
+TARGET_LINK_LIBRARIES(pm-bench pm-static)
 ADD_EXECUTABLE(tins-bench "src/tins-bench.cc")
 TARGET_LINK_LIBRARIES(tins-bench tins)

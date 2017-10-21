@@ -1,3 +1,6 @@
 [submodule "external/packetmachine"]
 	path = external/packetmachine
 	url = https://github.com/m-mizutani/packetmachine.git
+[submodule "external/libtins"]
+	path = external/libtins
+	url = https://github.com/mfontanini/libtins.git
