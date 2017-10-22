@@ -34,7 +34,12 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ENDIF()
 
 
-ADD_EXECUTABLE(pm-bench "src/pm-bench.cc")
-TARGET_LINK_LIBRARIES(pm-bench pm-static)
-ADD_EXECUTABLE(tins-bench "src/tins-bench.cc")
-TARGET_LINK_LIBRARIES(tins-bench tins)
+ADD_EXECUTABLE(pm-task1   "src/task1/pm.cc")
+ADD_EXECUTABLE(pm-task2   "src/task2/pm.cc")
+TARGET_LINK_LIBRARIES(pm-task1 pm-static)
+TARGET_LINK_LIBRARIES(pm-task2 pm-static)
+
+ADD_EXECUTABLE(tins-task1 "src/task1/tins.cc")
+ADD_EXECUTABLE(tins-task2 "src/task2/tins.cc")
+TARGET_LINK_LIBRARIES(tins-task1 tins)
+TARGET_LINK_LIBRARIES(tins-task2 tins)
