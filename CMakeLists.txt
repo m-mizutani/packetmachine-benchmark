@@ -19,7 +19,7 @@ SET(CMAKE_SHARED_LINKER_FLAGS "-lpcap -dynamiclib")
 
 INCLUDE_DIRECTORIES(external/packetmachine/src/)
 ADD_SUBDIRECTORY(external/packetmachine)
-INCLUDE_DIRECTORIES(external/libtins/src/)
+INCLUDE_DIRECTORIES(external/libtins/include/)
 ADD_SUBDIRECTORY(external/libtins)
 
 
