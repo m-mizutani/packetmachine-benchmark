@@ -1,7 +1,7 @@
-#include<iostream>
+#include <iostream>
 #include <tins/tins.h>
 #include <tins/tcp_ip/stream_follower.h>
-
+#include "../ticker.hpp"
 
 static size_t http_count(0);
 
@@ -16,7 +16,12 @@ bool callback(const Tins::PDU &pdu) {
 
 
 int main(int argc, char* argv[]) {
-  Tins::FileSniffer(argv[1]).sniff_loop(callback);
-  std::cout << http_count << std::endl;
+  auto sniffer = Tins::FileSniffer(argv[1]);
+  
+  {
+    Ticker t;
+    sniffer.sniff_loop(callback);
+  }
+
   return 0;
 }

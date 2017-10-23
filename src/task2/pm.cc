@@ -1,5 +1,6 @@
 #include<iostream>
 #include<packetmachine.hpp>
+#include "../ticker.hpp"
 
 int main(int argc, char* argv[]) {
   auto m = pm::Machine();
@@ -9,8 +10,11 @@ int main(int argc, char* argv[]) {
   m.on("TCP.new_session", [&](const pm::Property& p) {
       ssn_count++;
     });
-  m.loop();
+  
+  {
+    Ticker t;
+    m.loop();
+  }
 
-  std::cout << ssn_count << std::endl;
   return 0;
 }

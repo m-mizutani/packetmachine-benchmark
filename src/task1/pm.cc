@@ -1,5 +1,6 @@
-#include<iostream>
-#include<packetmachine.hpp>
+#include <iostream>
+#include <packetmachine.hpp>
+#include "../ticker.hpp"
 
 int main(int argc, char* argv[]) {
   pm::Config config;
@@ -13,8 +14,11 @@ int main(int argc, char* argv[]) {
         http_count++;
       }
     });
-  m.loop();
 
-  std::cout << http_count << std::endl;
+  {
+    Ticker t;
+    m.loop();
+  }
+
   return 0;
 }
