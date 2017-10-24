@@ -8,8 +8,10 @@ import (
 	"fmt"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
+	"github.com/google/gopacket/layers"
 	"log"
 	"os"
+	"time"
 )
 
 var (
@@ -22,12 +24,21 @@ func main() {
 	handle, err = pcap.OpenOffline(os.Args[1])
 	if err != nil { log.Fatal(err) }
 	defer handle.Close()
-	http_count := 0
+	httpCount := 0
 	
 	// Loop through packets in file
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
+
+	startTs := time.Now()
 	for packet := range packetSource.Packets() {
-		http_count++
-		fmt.Println(packet)
+		tcpLayer := packet.Layer(layers.LayerTypeTCP)
+		if tcpLayer != nil {
+			tcp, _ := tcpLayer.(*layers.TCP)
+			if tcp.SrcPort == 80 || tcp.DstPort == 80 {
+				httpCount++
+			}
+		}
 	}
+	endTs := time.Now()
+	fmt.Println(endTs.Sub(startTs).Nanoseconds() / 1000)
 }
