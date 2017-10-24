@@ -1,5 +1,6 @@
 #include<iostream>
 #include <tins/tins.h>
+#include <tins/tcp_ip/stream.h>
 #include <tins/tcp_ip/stream_follower.h>
 
 static size_t ssn_count(0);
