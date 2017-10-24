@@ -3,6 +3,9 @@
 import argparse
 import subprocess
 import os
+import collections
+import sys
+import json
 
 def get_test_data_path():
     meta_fname = 'test_data_path.txt'
@@ -19,7 +22,10 @@ def get_test_data_path():
 def main():
     psr = argparse.ArgumentParser()
     psr.add_argument('-n', '--loop-num', type=int, default=5)
+    psr.add_argument('-o', '--output', default='results.json')
     args = psr.parse_args()
+
+    results = collections.defaultdict(list)
     
     fpath_list = get_test_data_path()
     tasks = [
@@ -27,16 +33,36 @@ def main():
         ('PacketMachine', 'task2', './bin/pm-task2'),
         ('libtins',       'task1', './bin/tins-task1'),
         ('libtins',       'task2', './bin/tins-task2'),
+        ('GoPacket',      'task1', './bin/gopkt-task1'),
     ]
 
     for fpath in fpath_list:
-        for task, task_name, bpath in tasks:
+        for task_key in tasks:
+            lib_name, task_name, bpath = task_key
+            
+            print(task_key, end=': ')
+            sys.stdout.flush()
+            
             for i in range(args.loop_num):
                 p = subprocess.Popen([bpath, fpath], stdout=subprocess.PIPE)
                 stdout, stderr = p.communicate()
                 p.wait()
-                print(stdout)
+                micro_sec = int(stdout.decode('utf').strip())
+                results[task_key].append(micro_sec)
+                
+                print('.', end='')
+                sys.stdout.flush()
+                
+            print('')
             
     print('done')
+
+    res = collections.defaultdict(dict)
+    for (lib_name, task_name, bpath), ts_list in results.items():
+        res[task_name][lib_name] = ts_list
+
+    json.dump(res, open(args.output, 'w'))
+    
+
 
 if __name__ == '__main__': main()
