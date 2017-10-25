@@ -37,11 +37,16 @@ def main():
     ]
 
     for fpath in fpath_list:
-        for task_key in tasks:
-            lib_name, task_name, bpath = task_key
+        print('target: {}'.format(fpath))
+        for lib_name, task_name, bpath in tasks:
+            task_key = (lib_name, task_name, fpath)
             
             print(task_key, end=': ')
             sys.stdout.flush()
+
+            if not os.path.exists(bpath):
+                print('{} is not found, skip',format(bpath))
+                continue
             
             for i in range(args.loop_num):
                 p = subprocess.Popen([bpath, fpath], stdout=subprocess.PIPE)
@@ -57,9 +62,9 @@ def main():
             
     print('done')
 
-    res = collections.defaultdict(dict)
-    for (lib_name, task_name, bpath), ts_list in results.items():
-        res[task_name][lib_name] = ts_list
+    res = collections.defaultdict(lambda: collections.defaultdict(dict))
+    for (lib_name, task_name, fpath), ts_list in results.items():
+        res[task_name][fpath][lib_name] = ts_list
 
     json.dump(res, open(args.output, 'w'))
     

@@ -14,5 +14,11 @@ if [ ! -e $DATA_DIR/maccdc2012_00000.pcap ]; then
     gunzip $DATA_DIR/maccdc2012_00000.pcap.gz
 fi
 
-echo $DATA_DIR/maccdc2012_00000.pcap > test_data_path.txt
+if [ ! -e $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump ]; then
+    wget ftp://ita.ee.lbl.gov/new/lbnl.anon-ftp.Jan10-19.2003.tcpdump.gz -O $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump.gz
+		gunzip $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump.gz
+fi
 
+rm -f test_data_path.txt 
+echo $DATA_DIR/maccdc2012_00000.pcap               >> test_data_path.txt
+echo $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump >> test_data_path.txt
