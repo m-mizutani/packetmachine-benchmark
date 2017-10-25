@@ -19,6 +19,13 @@ def get_test_data_path():
 
     return fpath_list
 
+def exec_proc(args):
+    p = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = p.communicate()
+    p.wait()
+    return stdout.decode('utf')
+    
+
 def main():
     psr = argparse.ArgumentParser()
     psr.add_argument('-n', '--loop-num', type=int, default=5)
@@ -40,6 +47,7 @@ def main():
 
     for fpath in fpath_list:
         print('target: {}'.format(fpath))
+
         for lib_name, task_name, bpath in tasks:
             task_key = (lib_name, task_name, fpath)
             
@@ -51,10 +59,7 @@ def main():
                 continue
             
             for i in range(args.loop_num):
-                p = subprocess.Popen([bpath, fpath], stdout=subprocess.PIPE)
-                stdout, stderr = p.communicate()
-                p.wait()
-                micro_sec = int(stdout.decode('utf').strip())
+                micro_sec = int(exec_proc([bpath, fpath]).strip())
                 results[task_key].append(micro_sec)
                 
                 print('.', end='')
