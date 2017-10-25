@@ -19,6 +19,13 @@ if [ ! -e $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump ]; then
 		gunzip $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump.gz
 fi
 
+if [ ! -e $DATA_DIR/net-2009-11-17-10:32.pcap ]; then
+		curl http://downloads.digitalcorpora.org/corpora/scenarios/2009-m57-patents/net/net-2009-11-17-10:32.pcap.gz \
+				 -o $DATA_DIR/net-2009-11-17-10:32.pcap.gz
+		gunzip $DATA_DIR/net-2009-11-17-10:32.pcap.gz
+fi
+
 rm -f test_data_path.txt 
 echo $DATA_DIR/maccdc2012_00000.pcap               >> test_data_path.txt
 echo $DATA_DIR/lbnl.anon-ftp.Jan10-19.2003.tcpdump >> test_data_path.txt
+echo $DATA_DIR/net-2009-11-17-10:32.pcap           >> test_data_path.txt

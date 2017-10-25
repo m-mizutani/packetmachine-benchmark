@@ -36,8 +36,10 @@ ENDIF()
 
 ADD_EXECUTABLE(pm-task1   "src/task1/pm.cc")
 ADD_EXECUTABLE(pm-task2   "src/task2/pm.cc")
-TARGET_LINK_LIBRARIES(pm-task1 pm-static)
-TARGET_LINK_LIBRARIES(pm-task2 pm-static)
+ADD_EXECUTABLE(pm-task3   "src/task3/pm.cc")
+TARGET_LINK_LIBRARIES(pm-task1 pm-shared)
+TARGET_LINK_LIBRARIES(pm-task2 pm-shared)
+TARGET_LINK_LIBRARIES(pm-task3 pm-shared)
 
 ADD_EXECUTABLE(tins-task1 "src/task1/tins.cc")
 ADD_EXECUTABLE(tins-task2 "src/task2/tins.cc")
