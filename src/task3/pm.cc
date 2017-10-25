@@ -11,8 +11,9 @@ int main(int argc, char* argv[]) {
   auto m = pm::Machine(config);
   m.add_pcapfile(argv[1]);
 
+  auto q_key = m.lookup_param_key("DNS.question");
   m.on("DNS", [&](const pm::Property& p) {
-      const auto& vals = p.value("DNS.question");
+      const auto& vals = p.value(q_key);
       if (vals.is_array()) {
         for (size_t idx = 0; idx < vals.size(); idx++) {
           const auto& v = vals.get(idx);

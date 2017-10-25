@@ -31,8 +31,10 @@ def main():
     tasks = [
         ('PacketMachine', 'task1', './bin/pm-task1'),
         ('PacketMachine', 'task2', './bin/pm-task2'),
+        ('PacketMachine', 'task3', './bin/pm-task3'),
         ('libtins',       'task1', './bin/tins-task1'),
         ('libtins',       'task2', './bin/tins-task2'),
+        ('libtins',       'task3', './bin/tins-task3'),
         ('GoPacket',      'task1', './bin/gopkt-task1'),
     ]
 

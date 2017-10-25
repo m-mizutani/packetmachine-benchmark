@@ -43,5 +43,7 @@ TARGET_LINK_LIBRARIES(pm-task3 pm-shared)
 
 ADD_EXECUTABLE(tins-task1 "src/task1/tins.cc")
 ADD_EXECUTABLE(tins-task2 "src/task2/tins.cc")
+ADD_EXECUTABLE(tins-task3 "src/task3/tins.cc")
 TARGET_LINK_LIBRARIES(tins-task1 tins)
 TARGET_LINK_LIBRARIES(tins-task2 tins)
+TARGET_LINK_LIBRARIES(tins-task3 tins)
