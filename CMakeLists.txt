@@ -33,6 +33,9 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     LINK_DIRECTORIES(/usr/local/lib)
 ENDIF()
 
+ADD_EXECUTABLE(readpcap  "src/readpcap.cc")
+TARGET_LINK_LIBRARIES(readpcap pcap)
+
 
 ADD_EXECUTABLE(pm-task1   "src/task1/pm.cc")
 ADD_EXECUTABLE(pm-task2   "src/task2/pm.cc")
