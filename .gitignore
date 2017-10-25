@@ -3,3 +3,6 @@ CMakeFiles
 Makefile
 bin
 cmake_install.cmake
+results.json
+test_data_path.txt
+data
