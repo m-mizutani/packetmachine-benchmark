@@ -1,5 +1,7 @@
 sudo: false
-
+language: python
+python:
+  - "3.6"
 compiler:
   - clang
   - gcc
@@ -16,12 +18,7 @@ addons:
     - libpcap0.8
     - libpcap-dev
     - jq
-matrix:
-  include:
-    - language: cpp
-    - language: go
-    - language: python
-      python: "3.6"
+    - golang
 before_script:
   - ./bootstrap.sh
   - cmake . && make
