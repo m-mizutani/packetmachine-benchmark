@@ -43,6 +43,7 @@ def main():
         ('libtins',       'task2', './bin/tins-task2'),
         ('libtins',       'task3', './bin/tins-task3'),
         ('GoPacket',      'task1', './bin/gopkt-task1'),
+        ('GoPacket',      'task3', './bin/gopkt-task3'),
     ]
 
     for fpath in fpath_list:
