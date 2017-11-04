@@ -14,7 +14,8 @@ Prerequisite
 ------------
 
 - Python >= 3.6
-    - matplotlib
+    - psutil
+    - bokeh
 - Go >= 1.9.1
 
 Setup
@@ -26,6 +27,7 @@ Before setup, please set your `$GOPATH`.
 $ git submodule update --init --recursive
 $ cmake . && make
 $ ./buildgo.sh
+$ ./bootstrap.sh
 ```
 
 Run benchmark

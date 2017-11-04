@@ -6,6 +6,8 @@ import os
 import collections
 import sys
 import json
+import platform
+import psutil
 
 def get_test_data_path():
     meta_fname = 'test_data_path.txt'
@@ -56,17 +58,32 @@ def benchmark(fpath_list, tasks, loop_num):
     return results
 
 
-def measure_pcap(fpath_list, loop_num):
-    results = collections.defaultdict(lambda: {'read': [], 'count': 0, 'size': 0})
+def measure_basis(fpath_list, loop_num):
+    os_info = os.uname()
+    results = {
+        'os': {
+            'sysname': os_info.sysname,
+            'release': os_info.release,
+        },
+        'cpu': {
+            'freq': psutil.cpu_freq().current,
+            'count': psutil.cpu_count(),
+        },
+        'memory': psutil.virtual_memory().total,
+    }
+
+    dataset = collections.defaultdict(lambda: {'read': [], 'count': 0, 'size': 0})
     for fpath in fpath_list:
+        df_name = os.path.basename(fpath)
         for i in range(loop_num):
             lines = exec_proc(['./bin/readpcap', fpath]).split('\n')
-            results[fpath]['read'].append(int(lines[0]))
-            results[fpath]['count'] = int(lines[1])
-            results[fpath]['size'] = int(lines[2])
+            dataset[df_name]['read'].append(int(lines[0]))
+            dataset[df_name]['count'] = int(lines[1])
+            dataset[df_name]['size'] = int(lines[2])
 
-        results[fpath]['elapsed'] = min(results[fpath]['read'])
-            
+        dataset[df_name]['elapsed'] = min(dataset[df_name]['read'])
+
+    results['dataset'] = dataset
     return results
 
 def main():
@@ -87,14 +104,15 @@ def main():
         ('GoPacket',      'task3', './bin/gopkt-task3'),
     ]
     fpath_list = get_test_data_path()
-    base = measure_pcap(fpath_list, args.loop_num)
+    base = measure_basis(fpath_list, args.loop_num)
     json.dump(base, open(args.base, 'w'))
               
     results = benchmark(fpath_list, tasks, args.loop_num)
 
     res = collections.defaultdict(lambda: collections.defaultdict(dict))
     for (lib_name, task_name, fpath), ts_list in results.items():
-        res[task_name][fpath][lib_name] = ts_list
+        df_name = os.path.basename(fpath)
+        res[task_name][df_name][lib_name] = ts_list
 
     json.dump(res, open(args.output, 'w'))
     
