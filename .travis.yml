@@ -22,6 +22,7 @@ before_script:
   - ./bootstrap.sh
   - cmake . && make
   - ./buildgo.sh
+  - pip install -r requirements.txt
 script:
   - ./benchmark.py
   - cat ./results.json | jq .
