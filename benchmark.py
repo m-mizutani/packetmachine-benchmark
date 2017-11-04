@@ -77,6 +77,7 @@ def measure_basis(fpath_list, loop_num):
         df_name = os.path.basename(fpath)
         for i in range(loop_num):
             lines = exec_proc(['./bin/readpcap', fpath]).split('\n')
+            print(lines)
             dataset[df_name]['read'].append(int(lines[0]))
             dataset[df_name]['count'] = int(lines[1])
             dataset[df_name]['size'] = int(lines[2])
